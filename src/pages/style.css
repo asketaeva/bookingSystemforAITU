@@ -1,0 +1,18 @@
+.IndoorMap rect {
+    fill: #ccc;
+    stroke: #000;
+    stroke-width: 2px;
+}
+
+.IndoorMap rect.highlighted {
+    fill: #ff0;
+    stroke: #f00;
+}
+
+.modal{
+    border-radius: 8px solid;
+}
+.dialog-textField{
+    font-size: 20px;
+    padding: 20px;
+}
