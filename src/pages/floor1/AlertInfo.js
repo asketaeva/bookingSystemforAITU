@@ -42,7 +42,7 @@ export default function AlertInfo({ closeInfoMessage, info }) {
                                 marginRight: '5px',
                             }}
                         />
-                        - available auditoriums at this time
+                        - available auditoriums at the moment time
                     </div>
                     <div>
                         <div
@@ -55,7 +55,7 @@ export default function AlertInfo({ closeInfoMessage, info }) {
                                 marginRight: '5px',
                             }}
                         />
-                        - allowed auditoriums at this time
+                        - auditoriums that cannot be booked
                     </div>
                     <div>
                         {' '}

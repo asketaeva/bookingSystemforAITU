@@ -2,6 +2,44 @@ import ApiService from '../configs/ApiService';
 import { AUTH_TOKEN } from '../store/constants';
 const HistoryService = {};
 
+HistoryService.post_change_status_configs = async function (
+    request_status_config_id
+) {
+    try {
+        const response = await ApiService.post(
+            '/auditorium/common/request_status_configs/change/',
+            { request_status_config_id: request_status_config_id },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem(AUTH_TOKEN)}`,
+                },
+            }
+        );
+        return response;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+HistoryService.get_request_status_configs = async function () {
+    try {
+        const response = await ApiService.get(
+            '/auditorium/common/request_status_configs/read/',
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem(AUTH_TOKEN)}`,
+                },
+            }
+        );
+        const data = await response.data;
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 HistoryService.approve_request_post = async function (
     booking_request_id,
     booking_request_status_id,

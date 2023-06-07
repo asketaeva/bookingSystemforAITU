@@ -46,6 +46,7 @@ export const RegisterForm = (props) => {
 
         try {
             const response = await login(payload);
+            window.location.reload();
         } catch (error) {
             // Handle registration error
             console.error('Error registering:', error);

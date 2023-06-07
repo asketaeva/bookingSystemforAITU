@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAuditorium } from '../store/AuditoriumSlice';
 import AlertInfo from './floor1/AlertInfo';
 import { floorSecond } from './coordinates/FloorSecondPoints';
+import { floorThird } from './coordinates/FloorThirdPoints';
 
 export default function HomePage() {
     const dispatch = useDispatch();
@@ -33,6 +34,9 @@ export default function HomePage() {
     const auditorium = useSelector(
         (state) => state.auditorium.auditorium.auditoriums
     );
+    useEffect(() => {
+        dispatch(getAuditorium());
+    }, []);
 
     const handleFindAuditorium = (options) => {
         let targetAuditorium;
@@ -43,10 +47,6 @@ export default function HomePage() {
         }
         return null;
     };
-    console.log('targetAuditorium', search);
-    useEffect(() => {
-        dispatch(getAuditorium());
-    }, []);
 
     const handleChangeChecked = (event) => {
         setChecked(event.target.checked);
@@ -136,11 +136,16 @@ export default function HomePage() {
                     </Box>
                     <TabPanel value='1'>
                         {checked ? (
-                            <Map floor={floorOne} searchAuditorium={search} />
+                            <Map
+                                floor={floorOne}
+                                searchAuditorium={search}
+                                auditorium={auditorium}
+                            />
                         ) : (
                             <MapDefault
                                 floor={floorOne}
                                 searchAuditorium={search}
+                                auditorium={auditorium}
                             />
                         )}
                     </TabPanel>
@@ -149,15 +154,31 @@ export default function HomePage() {
                             <Map
                                 floor={floorSecond}
                                 searchAuditorium={search}
+                                auditorium={auditorium}
                             />
                         ) : (
                             <MapDefault
                                 floor={floorSecond}
                                 searchAuditorium={search}
+                                auditorium={auditorium}
                             />
                         )}
                     </TabPanel>
-                    <TabPanel value='3'></TabPanel>
+                    <TabPanel value='3'>
+                        {checked ? (
+                            <Map
+                                floor={floorThird}
+                                searchAuditorium={search}
+                                auditorium={auditorium}
+                            />
+                        ) : (
+                            <MapDefault
+                                floor={floorThird}
+                                searchAuditorium={search}
+                                auditorium={auditorium}
+                            />
+                        )}
+                    </TabPanel>
                 </TabContext>
                 {/* <IndoorMap /> */}
             </Card>

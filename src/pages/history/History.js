@@ -22,6 +22,8 @@ import FileDownloadDoneTwoToneIcon from '@mui/icons-material/FileDownloadDoneTwo
 import { useDispatch, useSelector } from 'react-redux';
 import {
     approveRequestPost,
+    changeStatusConfigs,
+    getRequestStatusConfigs,
     getRequests,
     getStatus,
 } from '../../store/RequestsSlice';
@@ -38,7 +40,12 @@ const History = () => {
     const status = useSelector(
         (state) => state.requestStatus.status.booking_request_status_ids
     );
+    const statusConfigs = useSelector(
+        (state) => state.requests.statusConfigs.request_status_configs
+    );
     const [selectedStatus, setSelectedStatus] = useState('');
+    const [selectedStatusConfigs, setSelectedStatusConfigs] = useState(1);
+
     const [displayItems, setDisplayItems] = useState(false);
     const [displayTextField, setDisplayTextField] = useState(
         Array((requests && requests.length) || 0).fill(false)
@@ -50,10 +57,12 @@ const History = () => {
         dispatch(getRequests());
         dispatch(getUser());
         dispatch(getStatus());
+        dispatch(getRequestStatusConfigs());
     }, []);
-
     const isSuperuser = users?.user_info?.is_superuser || 'no data';
     const user = users?.user_info?.user_id || 'no data';
+
+    console.log('statusConfigs', statusConfigs?.request_status_config_id);
 
     const handleSelectedStatus = (event) => {
         const selectedRequestStatus = event.target.value;
@@ -67,6 +76,33 @@ const History = () => {
         );
         setSelectedStatus(selectedStatus);
         setDisplayItems(true);
+    };
+
+    const handleStatusConfigs = async (event) => {
+        const selectedRequestStatusConfigs = event.target.value;
+        console.log(
+            'selectedRequestStatusConfigs',
+            selectedRequestStatusConfigs
+        );
+        let payload = {};
+        if (selectedRequestStatusConfigs !== undefined) {
+            payload = {
+                request_status_config_id: selectedRequestStatusConfigs,
+            };
+            setSelectedStatusConfigs(selectedRequestStatusConfigs);
+        }
+
+        try {
+            const response = await dispatch(changeStatusConfigs(payload));
+            // setSuccess(true);
+            // if (response.error.message !== 'Rejected') {
+            //     handleCloseModal();
+            // }
+
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     function SortListStatus(status) {
@@ -358,6 +394,9 @@ const History = () => {
     const selectedStatusValue = selectedStatus
         ? selectedStatus.booking_request_status_name
         : 'All';
+    const selectedStatusConfigsValue = selectedStatusConfigs
+        ? statusConfigs?.request_status_config_id
+        : 1;
     return (
         <div>
             {error && (
@@ -394,7 +433,7 @@ const History = () => {
                     }}
                 >
                     <Grid container spacing={2} sx={{ padding: '30px' }}>
-                        <Grid item lg={7}>
+                        <Grid item lg={5}>
                             <Typography
                                 sx={{
                                     fontFamily: 'Roboto',
@@ -402,10 +441,11 @@ const History = () => {
                                     fontSize: '20px',
                                 }}
                             >
-                                History of your booking classroom
+                                History of booking classrooms
                             </Typography>
                         </Grid>
-                        <Grid item lg={5}>
+
+                        <Grid item lg={3}>
                             <Select
                                 value={selectedStatusValue}
                                 onChange={handleSelectedStatus}
@@ -413,9 +453,6 @@ const History = () => {
                                 sx={{ width: '100%' }}
                                 size='small'
                             >
-                                <InputLabel id='demo-simple-select-label'>
-                                    Filter by status
-                                </InputLabel>
                                 <MenuItem value='All'>All</MenuItem>
                                 {status &&
                                     status.length > 0 &&
@@ -429,6 +466,31 @@ const History = () => {
                                             }
                                         >
                                             {option.booking_request_status_name}
+                                        </MenuItem>
+                                    ))}
+                            </Select>
+                        </Grid>
+
+                        <Grid item lg={4}>
+                            <Select
+                                value={selectedStatusConfigsValue}
+                                onChange={handleStatusConfigs}
+                                displayEmpty
+                                sx={{ width: '100%' }}
+                                size='small'
+                            >
+                                {statusConfigs &&
+                                    statusConfigs.length > 0 &&
+                                    statusConfigs.map((option) => (
+                                        <MenuItem
+                                            key={
+                                                option.request_status_config_code
+                                            }
+                                            value={
+                                                option.request_status_config_id
+                                            }
+                                        >
+                                            {option.request_status_config_name}
                                         </MenuItem>
                                     ))}
                             </Select>

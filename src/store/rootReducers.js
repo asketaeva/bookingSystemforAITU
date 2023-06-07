@@ -7,6 +7,7 @@ import user from './UserInfoSlice.js';
 import bookingAuditorium from './BookingAuditoriumSlice';
 import requests from './RequestsSlice.js';
 import requestStatus from './RequestsSlice.js';
+import statusConfigs from './RequestsSlice.js';
 
 const rootReducer = (asyncReducers) => (state, action) => {
     const combinedReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = (asyncReducers) => (state, action) => {
         user,
         requests,
         requestStatus,
+        statusConfigs,
         ...asyncReducers,
     });
     return combinedReducer(state, action);

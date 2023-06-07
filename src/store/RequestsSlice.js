@@ -4,10 +4,41 @@ import HistoryService from '../services/HistoryService';
 let initialState = {
     requests: {},
     status: {},
+    statusConfigs: {},
     showMessage: false,
     isLoading: true,
     error: '',
 };
+
+export const changeStatusConfigs = createAsyncThunk(
+    'requests/changeStatusConfigs',
+    async ({ request_status_config_id }, { rejectWithValue }) => {
+        try {
+            const response = await HistoryService.post_change_status_configs(
+                request_status_config_id
+            );
+
+            if (response.data) {
+                return response.data;
+            }
+            return response;
+        } catch (error) {
+            return rejectWithValue(error.response.data.error);
+        }
+    }
+);
+
+export const getRequestStatusConfigs = createAsyncThunk(
+    'requests/getRequestStatusConfigs',
+    async () => {
+        try {
+            const response = await HistoryService.get_request_status_configs();
+            return response;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+);
 
 export const approveRequestPost = createAsyncThunk(
     'requests/approveRequest',
@@ -69,6 +100,18 @@ export const requestsSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(getRequestStatusConfigs.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getRequestStatusConfigs.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.error = '';
+                state.statusConfigs = action.payload;
+            })
+            .addCase(getRequestStatusConfigs.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
             .addCase(getRequests.pending, (state) => {
                 state.isLoading = true;
             })
@@ -105,11 +148,24 @@ export const requestsSlice = createSlice({
             .addCase(approveRequestPost.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
+            })
+            .addCase(changeStatusConfigs.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(changeStatusConfigs.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.error = null;
+                state.changeStatusConfigs = action.payload;
+            })
+            .addCase(changeStatusConfigs.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
             });
     },
 });
 
-export const { requests, status, hideMessage, showMessage } =
+export const { requests, status, hideMessage, showMessage, statusConfigs } =
     requestsSlice.actions;
 
 export default requestsSlice.reducer;

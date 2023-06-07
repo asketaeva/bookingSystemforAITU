@@ -18,13 +18,13 @@ export default function Function() {
         const parser = new DOMParser();
         const doc = parser.parseFromString(svg, 'image/svg+xml');
         const pathElements = doc.querySelectorAll('path');
-        const newData = Array.from(pathElements).map(
-            (pathElement, index = 312) => {
-                const dAttributeValue = pathElement.getAttribute('d');
-                index++;
-                return `{id: ${index}, d: '${dAttributeValue}',highlighted: false, type: 'action'}`;
-            }
-        );
+        let index = 462;
+        const newData = Array.from(pathElements).map((pathElement) => {
+            const dAttributeValue = pathElement.getAttribute('d');
+
+            index++;
+            return `{id: '${index.toString()}', d: '${dAttributeValue}',highlighted: false, type: 'action'}`;
+        });
         setData(newData);
     };
 

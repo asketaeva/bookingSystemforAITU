@@ -2,18 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Tooltip } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import '../style.css';
-import { getAuditorium } from '../../store/AuditoriumSlice';
 
-const MapDefault = ({ floor, searchAuditorium }) => {
-    const auditorium = useSelector(
-        (state) => state.auditorium.auditorium.auditoriums
-    );
-    const dispatch = useDispatch();
-
+const MapDefault = ({ floor, searchAuditorium, auditorium }) => {
     const [rooms, setRooms] = useState(floor);
-    useEffect(() => {
-        dispatch(getAuditorium());
-    }, []);
 
     function findAuditorium(id) {
         if (auditorium) {
@@ -24,7 +15,7 @@ const MapDefault = ({ floor, searchAuditorium }) => {
     function handleMouseEnter(id) {
         setRooms((prevPolylines) =>
             prevPolylines.map((p) =>
-                p.id === id && p.type !== 'noAction'
+                p.id === id && p.type === 'action'
                     ? { ...p, highlighted: true }
                     : { ...p, highlighted: false }
             )
@@ -41,7 +32,7 @@ const MapDefault = ({ floor, searchAuditorium }) => {
             style={{
                 height: '100%',
                 width: '100%',
-                overflow: 'auto',
+                overflow: 'scroll',
                 marginTop: '40px',
                 marginLeft: '60px',
             }}
@@ -53,13 +44,11 @@ const MapDefault = ({ floor, searchAuditorium }) => {
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
             >
-                {rooms.map((room) => {
+                {rooms.map((room, index) => {
                     const matchedAuditorium = findAuditorium(room.id);
                     return (
                         <Tooltip
-                            title={
-                                matchedAuditorium?.auditorium_name || room.id
-                            }
+                            title={room.id}
                             key={matchedAuditorium?.auditorium_id || room.id}
                             placement='right-end'
                         >
@@ -76,6 +65,7 @@ const MapDefault = ({ floor, searchAuditorium }) => {
                                 stroke={'#7E8480'}
                                 onMouseEnter={() => handleMouseEnter(room.id)}
                                 onMouseLeave={() => handleMouseLeave(room.id)}
+                                key={index}
                             />
                         </Tooltip>
                     );
