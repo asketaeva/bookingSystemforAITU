@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Tooltip } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import '../style.css';
+import '../../style.css';
 
 const MapDefault = ({ floor, searchAuditorium, auditorium }) => {
     const [rooms, setRooms] = useState(floor);

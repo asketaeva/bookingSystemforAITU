@@ -5,25 +5,17 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Card from '@mui/material/Card';
-import {
-    Alert,
-    AlertTitle,
-    Autocomplete,
-    Grid,
-    Switch,
-    TextField,
-    Tooltip,
-} from '@mui/material';
+import { Autocomplete, Grid, Switch, TextField, Tooltip } from '@mui/material';
 // import FloorFirst from './floor1/FloorFirst';
 import HeaderBar from './HeaderBar';
-import Map from './floor1/Map';
-import { floorOne } from '../pages/coordinates/Points';
-import MapDefault from './floor1/MapDefault';
+import Map from '../floors/Map';
+import { floorOne } from '../coordinates/FloorFirstPoints';
+import MapDefault from '../floors/MapDefault';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAuditorium } from '../store/AuditoriumSlice';
-import AlertInfo from './floor1/AlertInfo';
-import { floorSecond } from './coordinates/FloorSecondPoints';
-import { floorThird } from './coordinates/FloorThirdPoints';
+import { getAuditorium } from '../../store/AuditoriumSlice';
+import AlertInfo from '../floors/AlertInfo';
+import { floorSecond } from '../coordinates/FloorSecondPoints';
+import { floorThird } from '../coordinates/FloorThirdPoints';
 
 export default function HomePage() {
     const dispatch = useDispatch();

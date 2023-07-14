@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Tooltip } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import '../style.css';
+import '../../style.css';
 import DialogChoice from '../dialogs/DialogChoice';
 
 const Map = ({ floor, searchAuditorium, auditorium }) => {

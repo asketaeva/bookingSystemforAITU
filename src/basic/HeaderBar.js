@@ -15,8 +15,8 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import React, { useEffect, useState } from 'react';
 import logo from './AITU LOGO.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { signOut } from '../store/AuthSlice';
-import { getUser } from '../store/UserInfoSlice';
+import { signOut } from '../../store/AuthSlice';
+import { getUser } from '../../store/UserInfoSlice';
 
 function stringAvatar(name) {
     return {

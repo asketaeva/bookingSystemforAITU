@@ -8,12 +8,11 @@ import {
 } from 'react-router-dom';
 import { Provider, useSelector } from 'react-redux';
 import store from './store';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/basic/HomePage';
 import LoginForm from './pages/auth/LoginForm';
 import History from './pages/history/History';
 import RegisterForm from './pages/auth/RegisterForm';
-import IndoorMap from './pages/IndoorMap';
-import Function from './pages/Function';
+import Function from './pages/basic/Function';
 
 function App() {
     const token = useSelector((state) => state.auth.token);
@@ -22,17 +21,14 @@ function App() {
     const location = useLocation();
 
     // Redirect the user to a different page if they navigate back to the login route
-    if (
-        (location.pathname === '/login' || location.pathname === '/signup') &&
-        token
-    ) {
-        return <Navigate to='/map' replace />;
-    } else if (
-        (location.pathname === '/map' || location.pathname === '/history') &&
-        !token
-    ) {
-        return <Navigate to='/login' replace />;
-    }
+    // if (location.pathname === '/login' && token !== null) {
+    //     return <Navigate to='/map' replace />;
+    // } else if (
+    //     (location.pathname === '/map' || location.pathname === '/history') &&
+    //     !token
+    // ) {
+    //     return <Navigate to='/login' replace />;
+    // }
 
     return (
         <div className='App'>
@@ -47,6 +43,7 @@ function App() {
                         )
                     }
                 />
+
                 {!token ? (
                     <>
                         <Route path='/login' element={<LoginForm />} />

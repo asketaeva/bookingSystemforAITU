@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import HeaderBar from '../HeaderBar';
+import HeaderBar from '../basic/HeaderBar';
 import {
     Alert,
     Button,
@@ -394,9 +394,7 @@ const History = () => {
     const selectedStatusValue = selectedStatus
         ? selectedStatus.booking_request_status_name
         : 'All';
-    const selectedStatusConfigsValue = selectedStatusConfigs
-        ? statusConfigs?.request_status_config_id
-        : 1;
+
     return (
         <div>
             {error && (
@@ -473,7 +471,7 @@ const History = () => {
 
                         <Grid item lg={4}>
                             <Select
-                                value={selectedStatusConfigsValue}
+                                value={1}
                                 onChange={handleStatusConfigs}
                                 displayEmpty
                                 sx={{ width: '100%' }}

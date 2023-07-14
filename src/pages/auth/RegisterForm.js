@@ -21,7 +21,7 @@ import {
     Link,
 } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
-import logo from '../AITU LOGO.png';
+import logo from '../basic/AITU LOGO.png';
 import { getGroup, getInstructor } from '../../store/GroupAndInstuctorSlice';
 
 export const RegisterForm = (props) => {
@@ -56,6 +56,7 @@ export const RegisterForm = (props) => {
     const [selectedValue, setSelectedValue] = useState('group');
     const [selectedGroup, setSelectedGroup] = useState('');
     const [selectedInstructor, setSelectedInstructor] = useState('');
+    const [success, setSucces] = useState(false);
     const [code, setCode] = useState('');
 
     const onChangeEmail = (e) => {
@@ -104,9 +105,7 @@ export const RegisterForm = (props) => {
         }
     });
 
-    const onRegister = async () => {
-        showLoading();
-
+    const onRegister = () => {
         let payload = {};
 
         if (!isStaff) {
@@ -131,7 +130,7 @@ export const RegisterForm = (props) => {
             };
         }
         try {
-            const response = await register(payload);
+            const response = register(payload);
 
             console.log('Response ', response);
         } catch (error) {
@@ -298,44 +297,33 @@ export const RegisterForm = (props) => {
                                 </>
                             )}
 
+                            <Grid item xs={12} style={{ marginTop: '10px' }}>
+                                <div onClick={onRegister}>Give me code</div>
+                            </Grid>
                             <Grid item xs={12}>
-                                {!isEmailExist && (
-                                    <TextField
-                                        sx={{
-                                            width: '100%',
-                                            marginTop: '15px',
-                                        }}
-                                        id='outlined-required'
-                                        label='Enter code'
-                                        value={code}
-                                        onChange={onChangeCode}
-                                    />
-                                )}
+                                <TextField
+                                    sx={{
+                                        width: '100%',
+                                        marginTop: '15px',
+                                    }}
+                                    id='outlined-required'
+                                    label='Enter code'
+                                    value={code}
+                                    onChange={onChangeCode}
+                                />
                             </Grid>
                         </Grid>
 
                         <Grid item xs={12}>
-                            {loading ? (
-                                <Link href='/map'>
-                                    <Button
-                                        sx={{ width: '100%' }}
-                                        variant='outlined'
-                                        size='large'
-                                        onClick={onRegister}
-                                    >
-                                        Sign Up
-                                    </Button>
-                                </Link>
-                            ) : (
+                            <Link href='/map'>
                                 <Button
                                     sx={{ width: '100%' }}
                                     variant='outlined'
                                     size='large'
-                                    onClick={onRegister}
                                 >
                                     Sign Up
                                 </Button>
-                            )}
+                            </Link>
                         </Grid>
                         <Grid item xs={12}>
                             Already have an account?{' '}

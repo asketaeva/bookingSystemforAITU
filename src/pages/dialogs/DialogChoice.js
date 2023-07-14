@@ -12,9 +12,7 @@ import {
     RadioGroup,
     Typography,
 } from '@mui/material';
-import '../style.css';
-import DialogForBookingForm from './DialogForBookingForm';
-import DialogSchedule from './DialogSchedule';
+import '../../style.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ViewSchedule from './DialogSchedule';
 import BookingForm from './DialogForBookingForm';

@@ -15,7 +15,7 @@ import {
     Typography,
     Link,
 } from '@mui/material';
-import logo from '../AITU LOGO.png';
+import logo from '../basic/AITU LOGO.png';
 
 export const RegisterForm = (props) => {
     const {
@@ -46,7 +46,7 @@ export const RegisterForm = (props) => {
 
         try {
             const response = await login(payload);
-            window.location.reload();
+            // window.location.reload();
         } catch (error) {
             // Handle registration error
             console.error('Error registering:', error);
