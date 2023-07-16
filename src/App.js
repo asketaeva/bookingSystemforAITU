@@ -39,23 +39,17 @@ function App() {
                         token ? (
                             <Navigate to='/map' replace />
                         ) : (
-                            <Navigate to='/login' replace />
+                            <Navigate to='/map' replace />
                         )
                     }
                 />
 
-                {!token ? (
-                    <>
-                        <Route path='/login' element={<LoginForm />} />
-                        <Route path='/signup' element={<RegisterForm />} />
-                    </>
-                ) : (
-                    <>
-                        <Route path='/map' element={<HomePage />} />
-                        <Route path='/history' element={<History />} />
-                        <Route path='/function' element={<Function />} />
-                    </>
-                )}
+                <Route path='/login' element={<LoginForm />} />
+                <Route path='/signup' element={<RegisterForm />} />
+
+                <Route path='/map' element={<HomePage />} />
+                <Route path='/history' element={<History />} />
+                <Route path='/function' element={<Function />} />
             </Routes>
         </div>
     );
